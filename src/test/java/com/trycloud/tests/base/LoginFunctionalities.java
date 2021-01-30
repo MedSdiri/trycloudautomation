@@ -21,7 +21,8 @@ import java.util.concurrent.TimeUnit;
 public class LoginFunctionalities extends TestBase{
 
     /*
-    Test case #1 - verify user login successfully
+   Test case #1 - verify user login successfully
+
 1. Navigate to login page http://qa.trycloud.net/index.php/login?clear=1
 2. Enter valid username
 3. Enter valid password
@@ -55,3 +56,4 @@ public class LoginFunctionalities extends TestBase{
         super.tearDownMethod();
     }
 }
+
