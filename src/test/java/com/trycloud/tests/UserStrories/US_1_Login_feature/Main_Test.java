@@ -58,7 +58,6 @@ public class Main_Test extends TestBase {
             Assert.assertEquals(expectedMessage, driver.findElement(By.xpath("//p[@class='warning wrongPasswordMsg']")).getText());
             Assert.assertEquals(expectedTitle, driver.getTitle());
             LoginUtil.inputClear(driver);
-
         }
     }
 
