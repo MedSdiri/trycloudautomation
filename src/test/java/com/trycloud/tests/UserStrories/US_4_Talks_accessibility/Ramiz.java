@@ -15,6 +15,8 @@ public class Ramiz extends TestBase {
     public void setupMethod(){
         super.setUpMethod();
     }
+
+
     @Test(description="Test case #1 - verify users can access to Talks module")
     public void accessToTalksModule(){
 
@@ -29,6 +31,23 @@ public class Ramiz extends TestBase {
         WebElement currentTile = driver.findElement(By.xpath("(//a[@aria-label='Talk'])[1]"));
         Assert.assertTrue(currentTile.isDisplayed());
     }
+
+    @Test
+    public void sendMessage(){
+        //1. Login as a user
+        LoginUtil.Login(driver,"userName1","password");
+
+        //2. Click Talks module
+        WebElement talkModule = driver.findElement(By.xpath("(//a[@aria-label='Talk'])[1]"));
+        talkModule.click();
+
+        //3. Search a user from search box on the left
+
+        //4. Write a message
+        //5. Click submit button
+        //6. Verify the message is displayed on the conversation log
+    }
+
 
     @AfterMethod
     public void tearDown(){
