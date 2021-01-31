@@ -37,7 +37,7 @@ public class Main_Test extends TestBase {
 
         for (String eachUser : userNames) {
             LoginUtil.Login(driver, eachUser, "password");
-            Assert.assertEquals(expectedUrl, driver.getCurrentUrl());
+            Assert.assertEquals(driver.getCurrentUrl(),expectedUrl );
             LoginUtil.LogOut(driver);
         }
     }
