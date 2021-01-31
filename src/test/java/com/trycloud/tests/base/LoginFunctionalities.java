@@ -44,7 +44,7 @@ public class LoginFunctionalities extends TestBase{
 
 
         for (String eachUser : userNames) {
-            LoginUtil.Login(driver, eachUser);
+            LoginUtil.Login(driver, eachUser, "password");
             Assert.assertEquals(expectedUrl, driver.getCurrentUrl());
             LoginUtil.LogOut(driver);
         }
