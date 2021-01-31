@@ -69,6 +69,6 @@ public class Main_Test extends TestBase {
 
     @AfterMethod
     public void tearDownMethod() {
-        //super.tearDownMethod();
+        super.tearDownMethod();
     }
 }
