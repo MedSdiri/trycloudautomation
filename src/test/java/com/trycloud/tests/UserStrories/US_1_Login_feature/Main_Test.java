@@ -37,7 +37,7 @@ public class Main_Test extends TestBase {
 
         for (String eachUser : userNames) {
             LoginUtil.Login(driver, eachUser, "password");
-            Assert.assertEquals(driver.getCurrentUrl(),expectedUrl );
+            Assert.assertEquals(driver.getCurrentUrl(),expectedUrl);
             LoginUtil.LogOut(driver);
         }
     }
@@ -58,6 +58,7 @@ public class Main_Test extends TestBase {
             Assert.assertEquals(expectedMessage, driver.findElement(By.xpath("//p[@class='warning wrongPasswordMsg']")).getText());
             Assert.assertEquals(expectedTitle, driver.getTitle());
             LoginUtil.inputClear(driver);
+
         }
     }
 
