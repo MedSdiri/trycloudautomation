@@ -1,19 +1,18 @@
 package com.trycloud.tests.UserStrories.US_4_Talks_accessibility;
 
+import com.github.javafaker.Faker;
 import com.trycloud.tests.base.HomePage;
 import com.trycloud.utilities.LoginUtil;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
 import java.util.ArrayList;
+
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
 import com.trycloud.utilities.BrowserUtils;
 import org.testng.asserts.SoftAssert;
 
@@ -64,17 +63,35 @@ public class Ramiz extends HomePage {
             employee100.click();
 
             //4. Write a message
+
+            Faker faker = new Faker();
+
             WebElement messageBox = driver.findElement(By.xpath("//div[@role='textbox']"));
-            String message = "hello mello yellow";
+            String message = faker.gameOfThrones().quote();
             messageBox.sendKeys(message);
-            BrowserUtils.sleep(3);
+            System.out.println(message);
+           // BrowserUtils.sleep(3);
             //5. Click submit button
             WebElement submitButton = driver.findElement(By.xpath("//button[@type='submit']"));
             submitButton.click();
-            BrowserUtils.sleep(5);
+           // BrowserUtils.sleep(5);
+
             //6. Verify the message is displayed on the conversation log
-            String actualMessage = driver.findElement(By.xpath("(//div[@class='messages'])[2]")).getText();
-            Assert.assertTrue(actualMessage.contains(message));
+            List<WebElement> messageDisplay = driver.findElements(By.xpath("//div[@class='scroller']"));
+            List<String > messageTests = new ArrayList<>();
+
+            for (WebElement eachText : messageDisplay) {
+                messageTests.add(eachText.getText());
+            }
+            /*
+            Once you’ve accepted your flaws, no one can use them against you.
+            Once you’ve accepted your flaws, no one can use them against you.
+            */
+
+            System.out.println(messageTests);
+
+BrowserUtils.sleep(5);
+
             LoginUtil.LogOut(driver);
         }
     }
@@ -97,7 +114,7 @@ public class Ramiz extends HomePage {
             WebElement uploadButton = driver.findElement(By.xpath("//span[@class='icon icon-add']"));
             uploadButton.click();
 
-            String path = "C:\\Users\\ramiz\\Desktop\\steakhouse.jfif";
+            String path = "\\C:\\Users\\ramiz\\Desktop\\CaBit.jpg";
 
             WebElement uploadFile = driver.findElement(By.xpath("//label[@for='file_upload_start']"));
             uploadFile.sendKeys(path);
