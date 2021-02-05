@@ -12,7 +12,7 @@ import java.util.*;
 
 
 
-public class Main_Test extends TestBase {
+public class US_1_Test extends TestBase {
 
     /*
     Test case #1 - verify user login successfully
