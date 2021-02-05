@@ -3,6 +3,7 @@ package com.trycloud.tests.UserStrories.US_1_Login_feature;
 import com.trycloud.tests.base.TestBase;
 import com.trycloud.utilities.LoginUtil;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -21,11 +22,28 @@ public class Main_Test extends TestBase {
 4. Click login button
 5. Verify the URL is showed to homepage’s url
 (Put this test case in testBase class with an annotation so it runs for all the test case)
-
+ hello
      */
     @BeforeMethod
     public void setUpMethod() {
         super.setUpMethod();
+    }
+
+    @Test
+    public void testing() {
+          /* LoginUtil.Login(driver,"userName1" , "password");
+        WebElement appMenu = driver.findElement(By.xpath("//ul[@id='appmenu']"));
+        appMenu.findElement(By.xpath("//li[@data-id='photos']")).click();
+
+
+           */
+        LoginUtil.Login(driver, "userName1", "password");
+        //getMenu("circles").click();
+        // String circles = "Circles";
+        Assert.assertTrue(getMenu("circles").isDisplayed());
+
+
+
     }
 
     @Test (description="valid test")
@@ -37,7 +55,7 @@ public class Main_Test extends TestBase {
 
         for (String eachUser : userNames) {
             LoginUtil.Login(driver, eachUser, "password");
-            Assert.assertEquals(driver.getCurrentUrl(),expectedUrl);
+            Assert.assertEquals(expectedUrl, driver.getCurrentUrl());
             LoginUtil.LogOut(driver);
         }
     }
@@ -58,7 +76,6 @@ public class Main_Test extends TestBase {
             Assert.assertEquals(expectedMessage, driver.findElement(By.xpath("//p[@class='warning wrongPasswordMsg']")).getText());
             Assert.assertEquals(expectedTitle, driver.getTitle());
             LoginUtil.inputClear(driver);
-
         }
     }
 
@@ -67,9 +84,10 @@ public class Main_Test extends TestBase {
         LoginUtil.Login(driver, "userName1", "password");
     }
 
-    @AfterMethod
+     @AfterMethod
     public void tearDownMethod() {
         super.tearDownMethod();
     }
-    //added notes
+
+
 }
