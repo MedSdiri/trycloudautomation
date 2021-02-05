@@ -1,16 +1,16 @@
 package com.trycloud.tests.UserStrories.US_4_Talks_accessibility;
 
-import com.trycloud.tests.base.TestBase;
+import com.trycloud.tests.base.HomePage;
 import com.trycloud.utilities.LoginUtil;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -18,7 +18,7 @@ import com.trycloud.utilities.BrowserUtils;
 import org.testng.asserts.SoftAssert;
 
 
-public class Ramiz extends TestBase {
+public class Ramiz extends HomePage {
 
     @BeforeMethod
     public void setupMethod() {
@@ -29,9 +29,9 @@ public class Ramiz extends TestBase {
     public void accessToTalksModule() {
 
         //1. Login as a user
-        ArrayList<String> userNames = new ArrayList<>(Arrays.asList("userName1", "userName2", "userName3", "userName4"));
         for (String eachUser : userNames) {
             LoginUtil.Login(driver, eachUser, "password");
+            System.out.println(eachUser + " test is running: !!");
 
             //2. Click Talks module
             WebElement talkModule = driver.findElement(By.xpath("(//a[@aria-label='Talk'])[1]"));
@@ -47,9 +47,9 @@ public class Ramiz extends TestBase {
     @Test(description = "US4-Test case #2 - verify users can send message")
     public void sendMessage() {
         //1. Login as a user
-        ArrayList<String> userNames = new ArrayList<>(Arrays.asList("userName1", "userName2", "userName3", "userName4"));
         for (String eachUser : userNames) {
             LoginUtil.Login(driver, eachUser, "password");
+            System.out.println(eachUser + " test is running: !!");
 
             driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
 
@@ -82,12 +82,10 @@ public class Ramiz extends TestBase {
     @Test(description = "US3-Test case #10 - verify users see the app storage usage")
     public void app_storage_usage() {
         //1. Login as a user
-        ArrayList<String> userNames = new ArrayList<>(Arrays.asList("userName1", "userName2", "userName3", "userName4"));
-
         SoftAssert a = new SoftAssert();
         for (String eachUser : userNames) {
             LoginUtil.Login(driver, eachUser, "password");
-
+            System.out.println(eachUser + " test is running: !!");
 
             // 2.Check the current storage usage
             WebElement fileModule = driver.findElement(By.xpath("(//li[@data-id='files'])[1]"));
@@ -95,27 +93,23 @@ public class Ramiz extends TestBase {
             WebElement storageUsage = driver.findElement(By.id("quota"));
             String beforeUpload = storageUsage.getText();
 
-
-            // Actions action = new Actions(driver);
             // 3.Upload a file
             WebElement uploadButton = driver.findElement(By.xpath("//span[@class='icon icon-add']"));
             uploadButton.click();
 
-            String path = "C:\\Users\\ramizDesktop\\uploadFile.txt" ;
+            String path = "C:\\Users\\ramiz\\Desktop\\steakhouse.jfif";
 
             WebElement uploadFile = driver.findElement(By.xpath("//label[@for='file_upload_start']"));
             uploadFile.sendKeys(path);
-            BrowserUtils.sleep(10);
-
-            // action.moveToElement(uploadButton1).sendKeys(path).perform();
-
+            driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
             // 4.Refresh the page
+
             driver.navigate().refresh();
 
             // 5.Verify the storage usage is increased
             String afterUpload = driver.findElement(By.id("quota")).getText();
 
-            a.assertFalse(beforeUpload.equals(afterUpload), "Driver can not upload the file. Before Upload: "+beforeUpload+"  After Upload: "+afterUpload+" FAILED!!!");
+            a.assertFalse(beforeUpload.equals(afterUpload), eachUser + " can not upload the file. Before Upload: " + beforeUpload + "  After Upload: " + afterUpload + " FAILED!!!");
 
 
             LoginUtil.LogOut(driver);
@@ -126,9 +120,9 @@ public class Ramiz extends TestBase {
     @Test(description = "US3-Test case #9 - verify users can change the app Settings")
     public void setting_functionality() {
         // 1.Login as a user
-        ArrayList<String> userNames = new ArrayList<>(Arrays.asList("userName1", "userName2", "userName3", "userName4"));
         for (String eachUser : userNames) {
             LoginUtil.Login(driver, eachUser, "password");
+            System.out.println(eachUser + " test is running: !!");
 
             //go to in File module
             WebElement fileModule = driver.findElement(By.xpath("(//li[@data-id='files'])[1]"));
@@ -174,9 +168,9 @@ public class Ramiz extends TestBase {
     public void commentToFilesOrFolder() {
 
         // 1.Login as a user
-        ArrayList<String> userNames = new ArrayList<>(Arrays.asList("userName1", "userName2", "userName3", "userName4"));
         for (String eachUser : userNames) {
             LoginUtil.Login(driver, eachUser, "password");
+            System.out.println(eachUser + " test is running: !!");
 
             //go to in File module
             WebElement fileModule = driver.findElement(By.xpath("(//li[@data-id='files'])[1]"));
@@ -220,10 +214,9 @@ public class Ramiz extends TestBase {
     public void deleteFileOrFolder() {
 
         //1. Login as a user
-        ArrayList<String> userNames = new ArrayList<>(Arrays.asList("userName1", "userName2", "userName3", "userName4"));
         for (String eachUser : userNames) {
             LoginUtil.Login(driver, eachUser, "password");
-            driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+            System.out.println(eachUser + " test is running: !!");
 
             //go to in File module
             WebElement fileModule = driver.findElement(By.xpath("(//li[@data-id='files'])[1]"));
@@ -242,7 +235,6 @@ public class Ramiz extends TestBase {
             deleteButton.click();
 
 
-
             //4. Click deleted files on the left bottom corner
             WebElement deletedFilesButton = driver.findElement(By.xpath("//a[@class='nav-icon-trashbin svg']"));
             deletedFilesButton.click();
@@ -257,15 +249,10 @@ public class Ramiz extends TestBase {
                 deletedFileNames.add(eachFile.getText());
             }
 
-            // BrowserUtils.sleep(5);
-
             Assert.assertTrue(deletedFileNames.contains(fileName), "Deleted file is not find in deleted file page.FAILED!!!");
-
             LoginUtil.LogOut(driver);
         }
     }
-
-
 
 
     @AfterMethod
