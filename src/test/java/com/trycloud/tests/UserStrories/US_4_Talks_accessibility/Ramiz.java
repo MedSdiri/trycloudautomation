@@ -83,6 +83,7 @@ public class Ramiz extends HomePage {
             for (WebElement eachText : messageDisplay) {
                 messageTests.add(eachText.getText());
             }
+            Assert.assertTrue(messageTests.contains(message));
             /*
             Once you’ve accepted your flaws, no one can use them against you.
             Once you’ve accepted your flaws, no one can use them against you.
