@@ -1,5 +1,6 @@
 package com.trycloud.tests.base;
 
+import com.trycloud.utilities.BrowserUtils;
 import com.trycloud.utilities.ConfigurationReader;
 import com.trycloud.utilities.WebDriverFactory;
 import org.openqa.selenium.By;
@@ -13,9 +14,9 @@ import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
 public abstract class TestBase {
-    public WebDriver driver;
+    public static WebDriver driver;
     //List of Users
-    public static ArrayList<String> userNames = new ArrayList<>(Arrays.asList("userName1", "userName2", "userName3", "userName4"));
+    //public static ArrayList<String> userNames = new ArrayList<>(Arrays.asList("userName1", "userName2", "userName3", "userName4"));
 
     public void setUpMethod(){
         driver = WebDriverFactory.getDriver(ConfigurationReader.getProperty("browser"));
@@ -26,13 +27,10 @@ public abstract class TestBase {
 
     //driver close
     public void tearDownMethod(){
+        BrowserUtils.sleep(3);
         driver.close();
     }
-    //better love method
-    public WebElement getMenu(String menu){
-        WebElement appMenu = driver.findElement(By.xpath("//ul[@id='appmenu']"));
-        return appMenu.findElement(By.xpath("//li[@data-id='"+menu+"']"));
-    }
+
 
     
 }
