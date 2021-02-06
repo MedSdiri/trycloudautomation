@@ -4,6 +4,7 @@ import com.github.javafaker.Faker;
 import com.trycloud.tests.base.HomePage;
 import com.trycloud.utilities.BrowserUtils;
 import com.trycloud.utilities.LoginUtil;
+import com.trycloud.utilities.RobotIA;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
@@ -11,9 +12,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
-import java.awt.*;
-import java.awt.datatransfer.StringSelection;
-import java.awt.event.KeyEvent;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -74,7 +73,7 @@ public class Ramiz extends HomePage {
             //5. Click submit button
             WebElement submitButton = driver.findElement(By.xpath("//button[@type='submit']"));
             submitButton.click();
-            // BrowserUtils.sleep(5);
+            driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
 
             //6. Verify the message is displayed on the conversation log
             List<WebElement> messageDisplay = driver.findElements(By.xpath("//div[@class='scroller']"));
@@ -85,6 +84,7 @@ public class Ramiz extends HomePage {
             }
 
             for (String eachTest : messageTests) {
+                BrowserUtils.sleep(2);
 
                 Assert.assertTrue(eachTest.contains(message));
             }
@@ -110,31 +110,16 @@ public class Ramiz extends HomePage {
 
             // 3.Upload a file
             driver.findElement(By.xpath("//span[@class='icon icon-add']")).click();
-            String path = "C:\\Users\\ramiz\\Desktop\\pictures\\CaBit.jpg";
+            String path = "C:\\Users\\ramiz\\Desktop\\pictures\\afro.jpg";
 
             //BrowserUtils.sleep(3);
             WebElement uploadFile = driver.findElement(By.xpath("//label[@for='file_upload_start']"));
             uploadFile.click();
 
-            StringSelection ss = new StringSelection(path);
-            Toolkit.getDefaultToolkit().getSystemClipboard().setContents(ss, null);
+            //StringSelection ss = new StringSelection(path);
+            //Toolkit.getDefaultToolkit().getSystemClipboard().setContents(ss, null);
 
-            Robot robot = null;
-            try {
-                robot = new Robot();
-            } catch (AWTException e) {
-                e.printStackTrace();
-            }
-            robot.delay(250);
-            robot.keyPress(KeyEvent.VK_ENTER);
-            robot.keyRelease(KeyEvent.VK_ENTER);
-            robot.keyPress(KeyEvent.VK_CONTROL);
-            robot.keyPress(KeyEvent.VK_V);
-            robot.keyRelease(KeyEvent.VK_V);
-            robot.keyRelease(KeyEvent.VK_CONTROL);
-            robot.keyPress(KeyEvent.VK_ENTER);
-            robot.delay(90);
-            robot.keyRelease(KeyEvent.VK_ENTER);
+            RobotIA.uploadFile(path);
 
             BrowserUtils.sleep(3);
             // 4.Refresh the page
@@ -144,8 +129,8 @@ public class Ramiz extends HomePage {
             // 5.Verify the storage usage is increased
             String afterUpload = driver.findElement(By.id("quota")).getText();
 
-            a.assertFalse(beforeUpload.equals(afterUpload), eachUser + " can not upload the file. Before Upload: " + beforeUpload + "  After Upload: " + afterUpload + " FAILED!!!");
-
+            a.assertFalse(beforeUpload.equals(afterUpload),
+                    eachUser + "can not upload the file. Before Upload: " + beforeUpload + "  After Upload: " + afterUpload + " FAILED!!!");
 
             LoginUtil.LogOut(driver);
         }
@@ -257,23 +242,23 @@ public class Ramiz extends HomePage {
             WebElement fileModule = driver.findElement(By.xpath("(//li[@data-id='files'])[1]"));
             fileModule.click();
 
-            //2. Click action-icon from any file on the page
-            WebElement actionIcon = driver.findElement(By.xpath("//a[@class='action action-menu permanent']"));
-            actionIcon.click();
-
             //get test of file before delete.
-            String fileName = driver.findElement(By.xpath("//span[@class='innernametext']")).getText();
+            String fileName = driver.findElement(By.xpath("(//span[@class='innernametext'])[2]")).getText();
 
+            //2. Click action-icon from any file on the page
+            WebElement actionIcon = driver.findElement(By.xpath("(//a[@data-action='menu'])[2]"));
+            actionIcon.click();
 
             //3. Choose “delete files” option
             WebElement deleteButton = driver.findElement(By.xpath("//div[@class='fileActionsMenu popovermenu bubble open menu']//li[8]"));
             deleteButton.click();
 
 
+
             //4. Click deleted files on the left bottom corner
             WebElement deletedFilesButton = driver.findElement(By.xpath("//a[@class='nav-icon-trashbin svg']"));
             deletedFilesButton.click();
-            driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+            BrowserUtils.sleep(3);
 
             //5. Verify the deleted file is displayed no the page.
             List<WebElement> deletedElements = driver.findElements(By.xpath("//td[@class='filename']//span[@class='innernametext']"));
