@@ -1,6 +1,8 @@
 package com.trycloud.tests.UserStrories.US_1_Login_feature;
 
+import com.trycloud.tests.base.HomePage;
 import com.trycloud.tests.base.TestBase;
+import com.trycloud.utilities.BrowserUtils;
 import com.trycloud.utilities.LoginUtil;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -12,7 +14,7 @@ import java.util.*;
 
 
 
-public class US_1_Test extends TestBase {
+public class US_1_Test extends HomePage {
 
     /*
     Test case #1 - verify user login successfully
@@ -29,59 +31,35 @@ public class US_1_Test extends TestBase {
         super.setUpMethod();
     }
 
-    @Test
-    public void testing() {
-          /* LoginUtil.Login(driver,"userName1" , "password");
-        WebElement appMenu = driver.findElement(By.xpath("//ul[@id='appmenu']"));
-        appMenu.findElement(By.xpath("//li[@data-id='photos']")).click();
-
-
-           */
-        LoginUtil.Login(driver, "userName1", "password");
-        //getMenu("circles").click();
-        // String circles = "Circles";
-        Assert.assertTrue(getMenu("circles").isDisplayed());
-
-
-
-    }
 
     @Test (description="valid test")
     public void validTest() {
 
-        ArrayList<String> userNames = new ArrayList<>(Arrays.asList("userName1", "userName2", "userName3", "userName4"));
-        String expectedUrl = "http://qa.trycloud.net/index.php/apps/files/";
+        String expectedUrl = "http://qa3.trycloud.net/index.php/apps/dashboard/";
 
 
         for (String eachUser : userNames) {
             LoginUtil.Login(driver, eachUser, "password");
-            Assert.assertEquals(expectedUrl, driver.getCurrentUrl());
+            BrowserUtils.sleep(2);
+            Assert.assertEquals(driver.getCurrentUrl(), expectedUrl);
             LoginUtil.LogOut(driver);
         }
     }
 
     @Test (description="inValid test")
     public void inValidTest() {
-        ArrayList<String> userNames1 = new ArrayList<>(Arrays.asList("userName1", "userName2", "userName3", "userName4"));
-        // String expectedUrl = "http://qa.trycloud.net/index.php/login?clear=1";
-        String expectedTitle = "Trycloud - QA";
+
+        String expectedTitle = "Trycloud QA";
         String expectedMessage = "Wrong username or password.";
 
 
-        for (String eachUser : userNames1) {
+        for (String eachUser : userNames) {
             LoginUtil.Login(driver, eachUser, "invalidPassword");
-            //String expectedUrl = "http://qa.trycloud.net/index.php/login?clear=" + ConfigurationReader.getProperty(eachUser);
-            //Assert.assertEquals(expectedUrl, driver.getCurrentUrl());
 
             Assert.assertEquals(expectedMessage, driver.findElement(By.xpath("//p[@class='warning wrongPasswordMsg']")).getText());
-            Assert.assertEquals(expectedTitle, driver.getTitle());
+            Assert.assertEquals(driver.getTitle(), expectedTitle);
             LoginUtil.inputClear(driver);
         }
-    }
-
-    @Test
-    public void tempTest() {
-        LoginUtil.Login(driver, "userName1", "password");
     }
 
      @AfterMethod

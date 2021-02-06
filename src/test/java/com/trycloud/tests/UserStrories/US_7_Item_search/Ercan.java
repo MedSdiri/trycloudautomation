@@ -1,5 +1,6 @@
 package com.trycloud.tests.UserStrories.US_7_Item_search;
 
+import com.trycloud.tests.base.HomePage;
 import com.trycloud.tests.base.TestBase;
 import com.trycloud.utilities.BrowserUtils;
 import com.trycloud.utilities.LoginUtil;
@@ -15,7 +16,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
-public class Ercan extends TestBase {
+public class Ercan extends HomePage {
 
     @BeforeMethod
     public void setUpMethod() {
