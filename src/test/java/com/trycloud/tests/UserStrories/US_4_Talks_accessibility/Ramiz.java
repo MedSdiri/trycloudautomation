@@ -2,6 +2,7 @@ package com.trycloud.tests.UserStrories.US_4_Talks_accessibility;
 
 import com.github.javafaker.Faker;
 import com.trycloud.tests.base.HomePage;
+import com.trycloud.utilities.BrowserUtils;
 import com.trycloud.utilities.LoginUtil;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -9,13 +10,13 @@ import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
+import java.awt.*;
+import java.awt.datatransfer.StringSelection;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-import com.trycloud.utilities.BrowserUtils;
-import org.testng.asserts.SoftAssert;
-
 
 public class Ramiz extends HomePage {
 
@@ -69,29 +70,24 @@ public class Ramiz extends HomePage {
             WebElement messageBox = driver.findElement(By.xpath("//div[@role='textbox']"));
             String message = faker.gameOfThrones().quote();
             messageBox.sendKeys(message);
-            System.out.println(message);
-           // BrowserUtils.sleep(3);
+
             //5. Click submit button
             WebElement submitButton = driver.findElement(By.xpath("//button[@type='submit']"));
             submitButton.click();
-           // BrowserUtils.sleep(5);
+            // BrowserUtils.sleep(5);
 
             //6. Verify the message is displayed on the conversation log
             List<WebElement> messageDisplay = driver.findElements(By.xpath("//div[@class='scroller']"));
-            List<String > messageTests = new ArrayList<>();
+            List<String> messageTests = new ArrayList<>();
 
             for (WebElement eachText : messageDisplay) {
                 messageTests.add(eachText.getText());
             }
-            Assert.assertTrue(messageTests.contains(message));
-            /*
-            Once you’ve accepted your flaws, no one can use them against you.
-            Once you’ve accepted your flaws, no one can use them against you.
-            */
 
-            System.out.println(messageTests);
+            for (String eachTest : messageTests) {
 
-BrowserUtils.sleep(5);
+                Assert.assertTrue(eachTest.contains(message));
+            }
 
             LoginUtil.LogOut(driver);
         }
@@ -111,15 +107,36 @@ BrowserUtils.sleep(5);
             WebElement storageUsage = driver.findElement(By.id("quota"));
             String beforeUpload = storageUsage.getText();
 
+
             // 3.Upload a file
-            WebElement uploadButton = driver.findElement(By.xpath("//span[@class='icon icon-add']"));
-            uploadButton.click();
+            driver.findElement(By.xpath("//span[@class='icon icon-add']")).click();
+            String path = "C:\\Users\\ramiz\\Desktop\\pictures\\CaBit.jpg";
 
-            String path = "\\C:\\Users\\ramiz\\Desktop\\CaBit.jpg";
-
+            //BrowserUtils.sleep(3);
             WebElement uploadFile = driver.findElement(By.xpath("//label[@for='file_upload_start']"));
-            uploadFile.sendKeys(path);
-            driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+            uploadFile.click();
+
+            StringSelection ss = new StringSelection(path);
+            Toolkit.getDefaultToolkit().getSystemClipboard().setContents(ss, null);
+
+            Robot robot = null;
+            try {
+                robot = new Robot();
+            } catch (AWTException e) {
+                e.printStackTrace();
+            }
+            robot.delay(250);
+            robot.keyPress(KeyEvent.VK_ENTER);
+            robot.keyRelease(KeyEvent.VK_ENTER);
+            robot.keyPress(KeyEvent.VK_CONTROL);
+            robot.keyPress(KeyEvent.VK_V);
+            robot.keyRelease(KeyEvent.VK_V);
+            robot.keyRelease(KeyEvent.VK_CONTROL);
+            robot.keyPress(KeyEvent.VK_ENTER);
+            robot.delay(90);
+            robot.keyRelease(KeyEvent.VK_ENTER);
+
+            BrowserUtils.sleep(3);
             // 4.Refresh the page
 
             driver.navigate().refresh();
