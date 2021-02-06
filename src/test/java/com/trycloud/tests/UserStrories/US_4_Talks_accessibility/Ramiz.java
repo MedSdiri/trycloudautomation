@@ -84,8 +84,7 @@ public class Ramiz extends HomePage {
             }
 
             for (String eachTest : messageTests) {
-                BrowserUtils.sleep(2);
-
+                driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
                 Assert.assertTrue(eachTest.contains(message));
             }
 
@@ -159,29 +158,18 @@ public class Ramiz extends HomePage {
             WebElement checkbox2 = driver.findElement(By.xpath("//label[@for='recommendationsEnabledToggle']"));
             WebElement checkbox3 = driver.findElement(By.xpath("//label[@for='showhiddenfilesToggle']"));
 
+            driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
             checkbox1.click();
-            Assert.assertFalse(checkbox1.isSelected());
-            BrowserUtils.sleep(1);
-
+            Assert.assertTrue(checkbox1.isEnabled(),eachUser+"can not able to click. FAILED!!!");
 
             checkbox2.click();
-            Assert.assertFalse(checkbox2.isSelected());
-            BrowserUtils.sleep(1);
-
+            Assert.assertTrue(checkbox2.isEnabled(),eachUser+"can not able to click. FAILED!!!");
 
             checkbox3.click();
-            Assert.assertFalse(checkbox3.isSelected());
-            BrowserUtils.sleep(1);
-
-
-            Assert.assertTrue(checkbox1.isEnabled());
-            Assert.assertTrue(checkbox2.isEnabled());
-            Assert.assertTrue(checkbox3.isEnabled());
-
+            Assert.assertTrue(checkbox3.isEnabled(),eachUser+"can not able to click. FAILED!!!");
 
             LoginUtil.LogOut(driver);
         }
-
     }
 
     @Test(description = "US3-Test case #8b - verify users can write comments to files/folders.")
