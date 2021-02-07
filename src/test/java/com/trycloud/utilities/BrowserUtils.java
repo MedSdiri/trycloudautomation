@@ -1,5 +1,7 @@
 package com.trycloud.utilities;
 
+import com.github.javafaker.Faker;
+
 public class BrowserUtils {
 
     public static void sleep(int second) {
@@ -10,5 +12,11 @@ public class BrowserUtils {
             System.out.println("something happened in sleep method");
         }
     }
+
+   public static Faker faker(){
+      Faker faker=new Faker();
+     return faker;
+   }
+
 
 }
