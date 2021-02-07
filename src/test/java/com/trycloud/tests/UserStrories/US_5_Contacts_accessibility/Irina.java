@@ -1,6 +1,5 @@
 package com.trycloud.tests.UserStrories.US_5_Contacts_accessibility;
 
-import com.github.javafaker.Faker;
 import com.trycloud.tests.PageComponents.HeaderLeft;
 import com.trycloud.tests.base.TestBase;
 import com.trycloud.utilities.BrowserUtils;
@@ -20,7 +19,6 @@ public class Irina extends TestBase {
         super.setUpMethod();
     }
 
-
     @Test(priority = 1)
     public void ContactsModules() {
         LoginUtil.Login(driver, "userName1", "password");
@@ -39,10 +37,10 @@ public class Irina extends TestBase {
         WebElement newContactButton = driver.findElement(By.xpath("//button[@id='new-contact-button']"));
         newContactButton.click();
         BrowserUtils.faker();
-        WebElement name  =driver.findElement(By.xpath("(//input[@type='text'])[2]"));
+        WebElement name = driver.findElement(By.xpath("(//input[@type='text'])[2]"));
         BrowserUtils.sleep(2);
-         name.clear();
-        String fullname=BrowserUtils.faker().name().fullName();
+        name.clear();
+        String fullname = BrowserUtils.faker().name().fullName();
         name.sendKeys(fullname);
 
 
@@ -67,31 +65,26 @@ public class Irina extends TestBase {
         WebElement extendedAddress = driver.findElement(By.xpath("(//input[@type='text'])[12]"));
         extendedAddress.sendKeys(BrowserUtils.faker().address().streetAddress());
 
-        WebElement postCode=driver.findElement(By.xpath("(//input[@type='text'])[13]"));
+        WebElement postCode = driver.findElement(By.xpath("(//input[@type='text'])[13]"));
         postCode.sendKeys(BrowserUtils.faker().address().zipCode());
         postCode.clear();
 
-        WebElement cityField=driver.findElement(By.xpath("(//input[@type='text'])[14]"));
+        WebElement cityField = driver.findElement(By.xpath("(//input[@type='text'])[14]"));
         cityField.sendKeys(BrowserUtils.faker().address().cityName());
-         cityField.clear();
+        cityField.clear();
 
-         WebElement stateField=driver.findElement(By.xpath("(//input[@type='text'])[15]"));
-         stateField.sendKeys(BrowserUtils.faker().address().state());
-         stateField.clear();
+        WebElement stateField = driver.findElement(By.xpath("(//input[@type='text'])[15]"));
+        stateField.sendKeys(BrowserUtils.faker().address().state());
+        stateField.clear();
 
-         WebElement countryField  =driver.findElement(By.xpath("(//input[@type='text'])[16]"));
-         countryField.sendKeys(BrowserUtils.faker().address().countryCode());
-
+        WebElement countryField = driver.findElement(By.xpath("(//input[@type='text'])[16]"));
+        countryField.sendKeys(BrowserUtils.faker().address().countryCode());
 
 
         List<WebElement> listOfContacts = driver.findElements(By.xpath("//div[@id='contacts-list']"));
-        for(WebElement eachContact : listOfContacts){
+        for (WebElement eachContact : listOfContacts) {
             Assert.assertTrue(eachContact.getText().contains(fullname));
         }
-
-
-
-
 
 
     }
