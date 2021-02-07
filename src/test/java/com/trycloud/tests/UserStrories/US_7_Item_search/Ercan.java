@@ -2,6 +2,7 @@ package com.trycloud.tests.UserStrories.US_7_Item_search;
 
 import com.trycloud.tests.base.TestBase;
 import com.trycloud.utilities.BrowserUtils;
+import com.trycloud.utilities.ConfigurationReader;
 import com.trycloud.utilities.LoginUtil;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -59,6 +60,25 @@ public class Ercan extends TestBase {
         }
 
     }
+
+
+    @Test
+    public void TestForTC3() {
+        LoginUtil.Login(driver,"userName1","password");
+
+//        WebElement topHeader = driver.findElement(By.cssSelector("header[id='header']"));
+//        WebElement topHeaderLeft = topHeader.findElement(By.cssSelector("div[class='header-right']"));
+
+
+
+
+        List<WebElement> allUnorderedListUnderLeftHeader = driver.findElements(By.xpath("//body//a"));
+        System.out.println(allUnorderedListUnderLeftHeader.size());
+        for(WebElement eachLink : allUnorderedListUnderLeftHeader) {
+            System.out.println(eachLink);
+        }
+    }
+
 
     @AfterMethod
     public void tearDown() {
