@@ -1,5 +1,6 @@
 package com.trycloud.tests.UserStrories.US_7_Item_search;
 
+import com.trycloud.tests.base.HomePage;
 import com.trycloud.tests.base.TestBase;
 import com.trycloud.utilities.BrowserUtils;
 import com.trycloud.utilities.LoginUtil;
@@ -13,7 +14,7 @@ import org.testng.annotations.Test;
 import java.util.Iterator;
 import java.util.List;
 
-public class US_7_Test extends TestBase {
+public class US_7_Test extends HomePage {
 
     @BeforeMethod
     public void setUpMethod() {
