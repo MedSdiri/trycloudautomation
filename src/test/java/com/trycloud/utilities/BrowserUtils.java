@@ -13,10 +13,10 @@ public class BrowserUtils {
         }
     }
 
-    public static Faker  faker(){
-        Faker faker = new Faker();
+   public static Faker faker(){
+      Faker faker=new Faker();
+     return faker;
+   }
 
-        return faker;
-    }
 
 }
