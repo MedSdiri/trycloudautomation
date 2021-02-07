@@ -1,8 +1,9 @@
 package com.trycloud.tests.UserStrories.US_4_Talks_accessibility;
 
-import com.github.javafaker.Faker;
+import com.trycloud.tests.PageComponents.HeaderLeft;
 import com.trycloud.tests.base.HomePage;
 import com.trycloud.utilities.BrowserUtils;
+import com.trycloud.utilities.ConfigurationReader;
 import com.trycloud.utilities.LoginUtil;
 import com.trycloud.utilities.RobotIA;
 import org.openqa.selenium.By;
@@ -24,21 +25,24 @@ public class Ramiz extends HomePage {
         super.setUpMethod();
     }
 
+
+
+
+
     @Test(description = "US4-Test case #1 - verify users can access to Talks module")
     public void accessToTalksModule() {
 
-        //1. Login as a user
         for (String eachUser : userNames) {
             LoginUtil.Login(driver, eachUser, "password");
             System.out.println(eachUser + " test is running: !!");
 
             //2. Click Talks module
-            WebElement talkModule = driver.findElement(By.xpath("(//a[@aria-label='Talk'])[1]"));
-            talkModule.click();
+            HeaderLeft.headerLeftMenu("spreed").click();
 
             //3. Verify the page tile is Talks module’s tile
-            WebElement currentTile = driver.findElement(By.xpath("(//a[@aria-label='Talk'])[1]"));
-            Assert.assertTrue(currentTile.isDisplayed());
+            String expectedTitle = "Talk - Trycloud QA";
+            String actualTitle = driver.getTitle();
+            Assert.assertEquals(actualTitle, expectedTitle, "Current page title is not match wirh expected title.FAILED!!!");
             LoginUtil.LogOut(driver);
         }
     }
@@ -53,8 +57,7 @@ public class Ramiz extends HomePage {
             driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
 
             //2. Click Talks module
-            WebElement talkModule = driver.findElement(By.xpath("(//a[@aria-label='Talk'])[1]"));
-            talkModule.click();
+            HeaderLeft.headerLeftMenu("spreed").click();
 
             //3. Search a user from search box on the left
             WebElement searchBox = driver.findElement(By.xpath("//input[@placeholder='Search conversations or users']"));
@@ -63,31 +66,24 @@ public class Ramiz extends HomePage {
             employee100.click();
 
             //4. Write a message
-
-            Faker faker = new Faker();
-
+            String message = BrowserUtils.faker().book().title();
+            //find messageBox
             WebElement messageBox = driver.findElement(By.xpath("//div[@role='textbox']"));
-            String message = faker.gameOfThrones().quote();
             messageBox.sendKeys(message);
 
             //5. Click submit button
             WebElement submitButton = driver.findElement(By.xpath("//button[@type='submit']"));
             submitButton.click();
-            driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
+            driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
             //6. Verify the message is displayed on the conversation log
             List<WebElement> messageDisplay = driver.findElements(By.xpath("//div[@class='scroller']"));
-            List<String> messageTests = new ArrayList<>();
 
             for (WebElement eachText : messageDisplay) {
-                messageTests.add(eachText.getText());
-            }
+                driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+                Assert.assertTrue(eachText.getText().contains(message));
 
-            for (String eachTest : messageTests) {
-                driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
-                Assert.assertTrue(eachTest.contains(message));
             }
-
             LoginUtil.LogOut(driver);
         }
     }
@@ -101,35 +97,30 @@ public class Ramiz extends HomePage {
             System.out.println(eachUser + " test is running: !!");
 
             // 2.Check the current storage usage
+
+
             WebElement fileModule = driver.findElement(By.xpath("(//li[@data-id='files'])[1]"));
             fileModule.click();
             WebElement storageUsage = driver.findElement(By.id("quota"));
             String beforeUpload = storageUsage.getText();
 
-
             // 3.Upload a file
             driver.findElement(By.xpath("//span[@class='icon icon-add']")).click();
-            String path = "C:\\Users\\ramiz\\Desktop\\pictures\\afro.jpg";
 
-            //BrowserUtils.sleep(3);
             WebElement uploadFile = driver.findElement(By.xpath("//label[@for='file_upload_start']"));
             uploadFile.click();
 
-            //StringSelection ss = new StringSelection(path);
-            //Toolkit.getDefaultToolkit().getSystemClipboard().setContents(ss, null);
-
-            RobotIA.uploadFile(path);
-
+            // using Robot to upload file
+            RobotIA.uploadFile(ConfigurationReader.getProperty("path"));
             BrowserUtils.sleep(3);
-            // 4.Refresh the page
 
+            // 4.Refresh the page
             driver.navigate().refresh();
 
             // 5.Verify the storage usage is increased
-            String afterUpload = driver.findElement(By.id("quota")).getText();
-
+            String afterUpload =storageUsage.getText();
             a.assertFalse(beforeUpload.equals(afterUpload),
-                    eachUser + "can not upload the file. Before Upload: " + beforeUpload + "  After Upload: " + afterUpload + " FAILED!!!");
+                    eachUser + " can not upload the file. Before Upload: " + beforeUpload + "  After Upload: " + afterUpload + " FAILED!!!");
 
             LoginUtil.LogOut(driver);
         }
@@ -158,15 +149,15 @@ public class Ramiz extends HomePage {
             WebElement checkbox2 = driver.findElement(By.xpath("//label[@for='recommendationsEnabledToggle']"));
             WebElement checkbox3 = driver.findElement(By.xpath("//label[@for='showhiddenfilesToggle']"));
 
-            driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
+            driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
             checkbox1.click();
-            Assert.assertTrue(checkbox1.isEnabled(),eachUser+"can not able to click. FAILED!!!");
+            Assert.assertTrue(checkbox1.isEnabled(), eachUser + "can not able to click. FAILED!!!");
 
             checkbox2.click();
-            Assert.assertTrue(checkbox2.isEnabled(),eachUser+"can not able to click. FAILED!!!");
+            Assert.assertTrue(checkbox2.isEnabled(), eachUser + "can not able to click. FAILED!!!");
 
             checkbox3.click();
-            Assert.assertTrue(checkbox3.isEnabled(),eachUser+"can not able to click. FAILED!!!");
+            Assert.assertTrue(checkbox3.isEnabled(), eachUser + "can not able to click. FAILED!!!");
 
             LoginUtil.LogOut(driver);
         }
@@ -231,16 +222,15 @@ public class Ramiz extends HomePage {
             fileModule.click();
 
             //get test of file before delete.
-            String fileName = driver.findElement(By.xpath("(//span[@class='innernametext'])[2]")).getText();
+            String fileName = driver.findElement(By.xpath("(//span[@class='innernametext'])[1]")).getText();
 
             //2. Click action-icon from any file on the page
-            WebElement actionIcon = driver.findElement(By.xpath("(//a[@data-action='menu'])[2]"));
+            WebElement actionIcon = driver.findElement(By.xpath("(//a[@data-action='menu'])[1]"));
             actionIcon.click();
 
             //3. Choose “delete files” option
             WebElement deleteButton = driver.findElement(By.xpath("//div[@class='fileActionsMenu popovermenu bubble open menu']//li[8]"));
             deleteButton.click();
-
 
 
             //4. Click deleted files on the left bottom corner
