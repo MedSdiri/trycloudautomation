@@ -17,7 +17,7 @@ public class RobotIA {
         } catch (AWTException e) {
             e.printStackTrace();
         }
-        robot.delay(250);
+        robot.delay(500);
         robot.keyPress(KeyEvent.VK_ENTER);
         robot.keyRelease(KeyEvent.VK_ENTER);
         robot.keyPress(KeyEvent.VK_CONTROL);
@@ -25,7 +25,7 @@ public class RobotIA {
         robot.keyRelease(KeyEvent.VK_V);
         robot.keyRelease(KeyEvent.VK_CONTROL);
         robot.keyPress(KeyEvent.VK_ENTER);
-        robot.delay(90);
+        robot.delay(500);
         robot.keyRelease(KeyEvent.VK_ENTER);
 
     }
