@@ -1,9 +1,7 @@
 package com.trycloud.tests.UserStrories.US_7_Item_search;
 
 import com.trycloud.tests.base.HomePage;
-import com.trycloud.tests.base.TestBase;
 import com.trycloud.utilities.BrowserUtils;
-import com.trycloud.utilities.ConfigurationReader;
 import com.trycloud.utilities.LoginUtil;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -12,8 +10,6 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
