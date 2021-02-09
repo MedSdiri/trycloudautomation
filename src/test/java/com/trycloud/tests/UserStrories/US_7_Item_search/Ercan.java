@@ -69,10 +69,26 @@ public class Ercan extends HomePage {
 
 
 
-        List<WebElement> allUnorderedListUnderLeftHeader = driver.findElements(By.xpath("//body//a"));
+        List<WebElement> allUnorderedListUnderLeftHeader =driver.findElements(By.xpath("//ul[@id='appmenu']//a//span"));
+//         appMenu.findElements(By.tagName("//a"));
+
+
+        List<String > namesOfEachMenu = new ArrayList<>();
+        for (WebElement eachElement : allUnorderedListUnderLeftHeader) {
+            namesOfEachMenu.add(eachElement.getAttribute("innerHTML"));
+            System.out.println(eachElement.getAttribute("innerHTML"));
+        }
+
+//        System.out.println(namesOfEachMenu);
+
+
+
+        BrowserUtils.sleep(3);
         System.out.println(allUnorderedListUnderLeftHeader.size());
+
         for(WebElement eachLink : allUnorderedListUnderLeftHeader) {
-            System.out.println(eachLink);
+            System.out.println(eachLink.getText());
+
         }
     }
 
