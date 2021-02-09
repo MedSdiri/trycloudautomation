@@ -26,8 +26,6 @@ public class US_3_Test extends TestBase {
     @Test
     public void Test1() {
         LoginUtil.Login(driver, "userName1", "password");
-        
-        
         HeaderRight.headerRightMenu(driver, "Contacts menu").click();
     
     }
