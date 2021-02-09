@@ -1,9 +1,7 @@
 package com.trycloud.tests.UserStrories.US_7_Item_search;
 
 import com.trycloud.tests.base.HomePage;
-import com.trycloud.tests.base.TestBase;
 import com.trycloud.utilities.BrowserUtils;
-import com.trycloud.utilities.ConfigurationReader;
 import com.trycloud.utilities.LoginUtil;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -13,7 +11,6 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -61,6 +58,10 @@ public class Ercan extends HomePage {
         }
 
     }
+    
+    
+    
+ 
 
 
     @Test
@@ -73,10 +74,26 @@ public class Ercan extends HomePage {
 
 
 
-        List<WebElement> allUnorderedListUnderLeftHeader = driver.findElements(By.xpath("//body//a"));
+        List<WebElement> allUnorderedListUnderLeftHeader =driver.findElements(By.xpath("//ul[@id='appmenu']//a//span"));
+//         appMenu.findElements(By.tagName("//a"));
+
+
+        List<String > namesOfEachMenu = new ArrayList<>();
+        for (WebElement eachElement : allUnorderedListUnderLeftHeader) {
+            namesOfEachMenu.add(eachElement.getAttribute("innerHTML"));
+            System.out.println(eachElement.getAttribute("innerHTML"));
+        }
+
+//        System.out.println(namesOfEachMenu);
+
+
+
+        BrowserUtils.sleep(3);
         System.out.println(allUnorderedListUnderLeftHeader.size());
+
         for(WebElement eachLink : allUnorderedListUnderLeftHeader) {
-            System.out.println(eachLink);
+            System.out.println(eachLink.getText());
+
         }
     }
 
@@ -87,3 +104,19 @@ public class Ercan extends HomePage {
     }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
