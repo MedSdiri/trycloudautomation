@@ -6,10 +6,10 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import sun.jvm.hotspot.debugger.Page;
 
-public class Mail extends HomePage {
+public class MailPage extends HomePage {
     
     
-    public Mail(){
+    public MailPage(){
         PageFactory.initElements(driver,this);
     }
     
