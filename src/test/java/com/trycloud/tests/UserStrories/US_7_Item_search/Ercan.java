@@ -60,6 +60,10 @@ public class Ercan extends HomePage {
         }
 
     }
+    
+    
+    
+ 
 
     @AfterMethod
     public void tearDown() {
@@ -67,3 +71,19 @@ public class Ercan extends HomePage {
     }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
