@@ -96,6 +96,21 @@ public class Irina extends TestBase {
 
     }
 
+    @Test
+    public void Test3() {
+
+        LoginUtil.Login(driver, "userName1", "password");
+        HeaderLeft.headerLeftMenu("contacts").click();
+
+
+      /*  List<WebElement> listOfContacts = driver.findElements(By.xpath("//div[@id='contacts-list']"));
+        for (WebElement eachContact : listOfContacts) {
+           Assert.assertTrue(eachContact.isDisplayed());
+
+        }*/
+    }
+
+
 
 }
 
