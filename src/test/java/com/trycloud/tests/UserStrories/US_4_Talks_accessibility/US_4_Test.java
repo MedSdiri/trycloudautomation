@@ -2,6 +2,7 @@ package com.trycloud.tests.UserStrories.US_4_Talks_accessibility;
 
 import com.trycloud.tests.PageComponents.HeaderLeft;
 import com.trycloud.tests.base.HomePage;
+import com.trycloud.utilities.BrowserUtils;
 import com.trycloud.utilities.LoginUtil;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
@@ -37,10 +38,11 @@ public class US_4_Test extends HomePage {
         Navigator sendMessageFunction = new Navigator(driver);
         HeaderLeft.headerLeftMenu("spreed").click();
 
-        sendMessageFunction.sendMessage("user97");
+        sendMessageFunction.sendMessage("User84");
 
         String expectedMessage = "Test1234";
         sendMessageFunction.messageBoxInput.sendKeys(expectedMessage);
+        BrowserUtils.sleep(2);
         sendMessageFunction.messageSummitButton.click();
 
         List<String> actualMessage = new ArrayList<>();

@@ -3,6 +3,7 @@ package com.trycloud.tests.UserStrories.US_4_Talks_accessibility;
 import com.trycloud.utilities.BrowserUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
@@ -20,8 +21,11 @@ public class Navigator {
     }
 
 
-    @FindBy(xpath = "(//ul[@class='contacts-list']//li)")
+    @FindBy(xpath = "//ul[@class='contacts-list']")
     public static List<WebElement> searchResult;
+
+    @FindBy(xpath = "//ul[@class='conversations']")
+    public List<WebElement> conversationList;
 
     @FindBy(how = How.XPATH, using = "//input[@class='app-navigation-search__input']")
     public static WebElement searchInputBox;
@@ -32,7 +36,7 @@ public class Navigator {
     @FindBy(how = How.XPATH, using = "//div[@class='new-message-form__advancedinput']")
     WebElement messageBoxInput;
 
-    @FindBy(xpath = "//button[@aria-label='Send message']")
+    @FindBy(xpath = "//button[@type='submit']")
     WebElement messageSummitButton;
 
 
@@ -47,13 +51,25 @@ public class Navigator {
     //Search User from searchBox and select
     public void sendMessage(String personName) {
         searchInputBox.sendKeys(personName);
-        BrowserUtils.sleep(3);
-
-       // List<WebElement> resultList = searchResult;
-        for (WebElement eachResult : searchResult) {
+        Actions action = new Actions(driver);
+        for (WebElement eachResult : conversationList) {
+            System.out.println(eachResult.getText());
             if (eachResult.getText().equalsIgnoreCase(personName))
-                eachResult.click();
+                action.doubleClick(eachResult).perform();
+              // eachResult.click();
+            else {
+                for (WebElement webElement : searchResult) {
+                    System.out.println(webElement.getText());
+                    if(webElement.getText().equalsIgnoreCase(personName))
+                        action.doubleClick(eachResult).perform();
+                       // webElement.click();
+                    else
+                        System.out.println("Person is not in list.Please try with available input. FAILED!!!");
+
+                }
+            }
         }
+
 
     }
 }
