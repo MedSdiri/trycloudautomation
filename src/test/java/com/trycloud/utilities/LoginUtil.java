@@ -22,7 +22,7 @@ public class LoginUtil {
 
     }
 
-
+  
     public static void LogOut(WebDriver driver) {
         WebElement logOut = driver.findElement(By.xpath("//*[@id='expand']/div[1]"));
         logOut.click();
