@@ -3,6 +3,7 @@ package com.trycloud.tests.UserStrories.US_4_Talks_accessibility;
 import com.trycloud.tests.PageComponents.HeaderLeft;
 import com.trycloud.tests.base.HomePage;
 import com.trycloud.utilities.BrowserUtils;
+import com.trycloud.utilities.Driver;
 import com.trycloud.utilities.LoginUtil;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
@@ -13,11 +14,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class US_4_Test extends HomePage {
-
+    Navigator talk = new Navigator();
 
     @BeforeMethod
     public void setUp() {
-        super.setUpMethod();
+       setUpMethod();
     }
 
     @Test(description = "US4-Test case #1 - verify users can access to Talks module")
@@ -32,25 +33,32 @@ public class US_4_Test extends HomePage {
 
     }
 
+
     @Test(description = "US4-Test case #2 - verify users can send message")
     public void sendMessage() {
-        LoginUtil.Login(driver, "userName4", "password");
-        Navigator sendMessageFunction = new Navigator(driver);
+        LoginUtil.Login(Driver.getDriver(), "userName4", "password");
+        String userName = "User84";
+
         HeaderLeft.headerLeftMenu("spreed").click();
 
-        sendMessageFunction.sendMessage("User84");
-
-        String expectedMessage = "Test1234";
-        sendMessageFunction.messageBoxInput.sendKeys(expectedMessage);
         BrowserUtils.sleep(2);
-        sendMessageFunction.messageSummitButton.click();
+        talk.searchInputBox.sendKeys(userName);
+
+        for (WebElement eachUser : talk.searchResult) {
+            if(eachUser.getText().contains(userName)){
+                eachUser.click();
+            }
+        }
+
+        talk.messageBoxInput.sendKeys("Hello World");
+        talk.messageSummitButton.click();
 
         List<String> actualMessage = new ArrayList<>();
-        for (WebElement each : sendMessageFunction.conversationMessageBox)
+        for (WebElement each : talk.conversationMessageBox)
             actualMessage.add(each.getText());
 
         for (String each : actualMessage) {
-            Assert.assertTrue(each.contains(expectedMessage), "Expected mesage not contains in the actual message list.Failed!!!");
+            Assert.assertTrue(each.contains("Hello World"), "Expected mesage not contains in the actual message list.Failed!!!");
         }
         LoginUtil.LogOut(driver);
     }
