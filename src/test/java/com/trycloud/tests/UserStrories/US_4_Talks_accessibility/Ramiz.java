@@ -26,9 +26,6 @@ public class Ramiz extends HomePage {
     }
 
 
-
-
-
     @Test(description = "US4-Test case #1 - verify users can access to Talks module")
     public void accessToTalksModule() {
 
@@ -53,8 +50,6 @@ public class Ramiz extends HomePage {
         for (String eachUser : userNames) {
             LoginUtil.Login(driver, eachUser, "password");
             System.out.println(eachUser + " test is running: !!");
-
-            driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
 
             //2. Click Talks module
             HeaderLeft.headerLeftMenu("spreed").click();
@@ -118,7 +113,7 @@ public class Ramiz extends HomePage {
             driver.navigate().refresh();
 
             // 5.Verify the storage usage is increased
-            String afterUpload =storageUsage.getText();
+            String afterUpload = storageUsage.getText();
             a.assertFalse(beforeUpload.equals(afterUpload),
                     eachUser + " can not upload the file. Before Upload: " + beforeUpload + "  After Upload: " + afterUpload + " FAILED!!!");
 
